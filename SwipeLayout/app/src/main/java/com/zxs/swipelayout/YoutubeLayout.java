@@ -61,7 +61,7 @@ public class YoutubeLayout extends ViewGroup {
     boolean smoothSlideTo(float slideOffset) {
         final int topBound = getPaddingTop();
         int y = (int) (topBound + slideOffset * mDragRange);
-
+        Log.v("zxs","view smooth");
         if (mDragHelper.smoothSlideViewTo(mHeaderView, mHeaderView.getLeft(), y)) {
             ViewCompat.postInvalidateOnAnimation(this);
             return true;

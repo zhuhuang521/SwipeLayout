@@ -2,6 +2,7 @@ package com.zxs.swipelayout;
 
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -16,6 +17,8 @@ public class SwipeLayout extends FrameLayout{
 
     private ViewDragHelper mViewDragHelper;
 
+    private View mFrontView;
+    private View mBottomView;
     public SwipeLayout(Context context) {
         this(context, null);
     }
@@ -29,11 +32,25 @@ public class SwipeLayout extends FrameLayout{
         mViewDragHelper=ViewDragHelper.create(this,1.0f,new ViewDragCallback());
     }
 
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        mFrontView=getChildAt(1);
+        mBottomView=getChildAt(0);
+    }
 
     /**
      * ViewDragHelper callback
      * */
     private class ViewDragCallback extends ViewDragHelper.Callback{
+
+
+        @Override
+        public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
+            super.onViewPositionChanged(changedView, left, top, dx, dy);
+            Log.v("zxs","view changed "+left+"   "+top+"   "+dx+"   "+dy);
+        }
+
         @Override
         public int clampViewPositionVertical(View child, int top, int dy) {
 
@@ -49,6 +66,12 @@ public class SwipeLayout extends FrameLayout{
             return newLeft;
         }
 
+        @Override
+        public void onViewReleased(View releasedChild, float xvel, float yvel) {
+            super.onViewReleased(releasedChild, xvel, yvel);
+            slidViewTo();
+            mViewDragHelper.settleCapturedViewAt(0, 0);
+        }
 
         public ViewDragCallback() {
             super();
@@ -57,8 +80,32 @@ public class SwipeLayout extends FrameLayout{
         @Override
         public boolean tryCaptureView(View view, int i) {
 
-            return true;
+            return view==mFrontView;
         }
+
+
+    }
+
+    /**
+     * 自动滑动view到某个位置
+     * */
+
+    private boolean slidViewTo(){
+
+        mViewDragHelper.smoothSlideViewTo(mFrontView,0,0);
+
+        return true;
+    }
+
+    @Override
+    public void computeScroll() {
+        //super.computeScroll();
+        //mViewDragHelper.smoothSlideViewTo(mFrontView,0,0);
+       if(mViewDragHelper.continueSettling(true)){
+            Log.v("zxs","slidto");
+            ViewCompat.postInvalidateOnAnimation(this);
+       }
+
     }
 
     @Override
