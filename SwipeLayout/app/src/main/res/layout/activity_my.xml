@@ -8,9 +8,26 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MyActivity">
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <com.zxs.swipelayout.SwipeLayout
+        android:background="@android:color/holo_green_dark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:textColor="#ffffff"
+            android:background="@android:color/holo_red_light"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:text="background"
+            android:layout_width="wrap_content"
+            android:layout_height="100dip" />
+        <TextView
+            android:textColor="#ffffff"
+            android:background="@android:color/holo_blue_dark"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:text="background"
+            android:layout_width="wrap_content"
+            android:layout_height="100dip" />
+        </com.zxs.swipelayout.SwipeLayout>
 
 </RelativeLayout>
