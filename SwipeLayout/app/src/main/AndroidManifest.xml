@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".SwipeActivity"/>
         <activity android:name=".PullToRefreshActivity"/>
+        <activity android:name=".SwipeListActivity"/>
     </application>
 
 </manifest>

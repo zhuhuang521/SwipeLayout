@@ -16,6 +16,7 @@ public class MyActivity extends Activity {
         setContentView(R.layout.activity_my);
         findViewById(R.id.btn_swipe).setOnClickListener(new MyClickListener());
         findViewById(R.id.btn_pulltorefresh).setOnClickListener(new MyClickListener());
+        findViewById(R.id.btn_swipelist).setOnClickListener(new MyClickListener());
     }
 
     private class MyClickListener implements View.OnClickListener{
@@ -28,6 +29,14 @@ public class MyActivity extends Activity {
                     startActivity(gotoSwipe);
                     break;
                 case R.id.btn_pulltorefresh:
+                    Intent putorefresh=new Intent();
+                    putorefresh.setClass(MyActivity.this,PullToRefreshActivity.class);
+                    startActivity(putorefresh);
+                    break;
+                case R.id.btn_swipelist:
+                    Intent swipelist=new Intent();
+                    swipelist.setClass(MyActivity.this,SwipeListActivity.class);
+                    startActivity(swipelist);
                     break;
             }
         }
