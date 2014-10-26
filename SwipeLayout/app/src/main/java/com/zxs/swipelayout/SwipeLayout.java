@@ -16,9 +16,10 @@ import android.widget.FrameLayout;
 public class SwipeLayout extends FrameLayout{
 
     private ViewDragHelper mViewDragHelper;
-
     private View mFrontView;
     private View mBottomView;
+
+    private float xOffset;
     public SwipeLayout(Context context) {
         this(context, null);
     }
@@ -48,7 +49,9 @@ public class SwipeLayout extends FrameLayout{
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             super.onViewPositionChanged(changedView, left, top, dx, dy);
-            Log.v("zxs","view changed "+left+"   "+top+"   "+dx+"   "+dy);
+            //Log.v("zxs","view changed "+left+"   "+top+"   "+dx+"   "+dy);
+            xOffset=Math.abs((float)left)/mBottomView.getWidth();
+           // Log.v("zxs","view changed "+xOffset);
         }
 
         @Override
@@ -59,18 +62,22 @@ public class SwipeLayout extends FrameLayout{
 
         @Override
         public int clampViewPositionHorizontal(View child, int left, int dx) {
-            Log.v("zxs","horizontal touch "+left+"   "+dx);
-            final int leftBound = getPaddingLeft();
-            final int rightBound = getWidth() - child.getWidth();
-            final int newLeft = Math.min(Math.max(left, leftBound), rightBound);
+
+            final int newLeft =Math.min(Math.max(-mBottomView.getWidth(),left),0);
             return newLeft;
         }
 
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             super.onViewReleased(releasedChild, xvel, yvel);
-            slidViewTo();
-            mViewDragHelper.settleCapturedViewAt(0, 0);
+            //slidViewTo();
+            //Log.v("zxs","xvel"+xvel);
+            if(xOffset>=0.5){
+                mViewDragHelper.settleCapturedViewAt(-mBottomView.getWidth(), 0);
+            }else{
+                mViewDragHelper.settleCapturedViewAt(0, 0);
+            }
+            invalidate();
         }
 
         public ViewDragCallback() {
@@ -102,7 +109,7 @@ public class SwipeLayout extends FrameLayout{
         //super.computeScroll();
         //mViewDragHelper.smoothSlideViewTo(mFrontView,0,0);
        if(mViewDragHelper.continueSettling(true)){
-            Log.v("zxs","slidto");
+
             ViewCompat.postInvalidateOnAnimation(this);
        }
 
@@ -122,7 +129,10 @@ public class SwipeLayout extends FrameLayout{
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         mViewDragHelper.processTouchEvent(event);
-
+        switch(event.getAction()){
+            case MotionEvent.ACTION_UP:
+                break;
+        }
         return true;
     }
 }
