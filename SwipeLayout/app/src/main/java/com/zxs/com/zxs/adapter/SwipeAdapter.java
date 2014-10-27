@@ -1,10 +1,12 @@
 package com.zxs.com.zxs.adapter;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 
 import com.zxs.swipelayout.SwipeLayout;
 
@@ -23,7 +25,12 @@ public abstract class SwipeAdapter extends BaseAdapter {
           SwipeLayout swipeLayout=new SwipeLayout(parent.getContext());
           viewHolder=new ViewHolder();
           viewHolder.frontView=getSwipeView(position, viewHolder.frontView,swipeLayout);
-          viewHolder.bottomView=getSwipeView(position,viewHolder.bottomView,swipeLayout);
+          viewHolder.bottomView=getBottomView(position,viewHolder.bottomView,swipeLayout);
+          FrameLayout.LayoutParams params =new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.MATCH_PARENT);
+          params.gravity= Gravity.RIGHT;
+          swipeLayout.addView(viewHolder.bottomView,params);
+          FrameLayout.LayoutParams frontparams =new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
+          swipeLayout.addView(viewHolder.frontView,frontparams);
           convertView=swipeLayout;
           convertView.setTag(viewHolder);
         }
@@ -33,7 +40,7 @@ public abstract class SwipeAdapter extends BaseAdapter {
             viewHolder.bottomView=getBottomView(position,viewHolder.bottomView,parent);
         }
 
-        return getSwipeView(position, convertView, parent);
+        return convertView;
     }
 
     public abstract View getSwipeView(int position,View convertView, ViewGroup parent);

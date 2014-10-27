@@ -5,6 +5,7 @@
     android:background="@color/green"
     android:layout_height="wrap_content">
     <TextView
+        android:id="@+id/tv_bg"
         android:textColor="@android:color/white"
         android:padding="20dip"
         android:gravity="center"
