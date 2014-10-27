@@ -30,15 +30,24 @@ public class SwipeLayout extends FrameLayout{
 
     public SwipeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        Log.v("zxs","created");
         mViewDragHelper=ViewDragHelper.create(this,1.0f,new ViewDragCallback());
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        initChildView();
+    }
+
+    /**
+     * 初始化子view
+     * */
+    private void initChildView(){
         mFrontView=getChildAt(1);
         mBottomView=getChildAt(0);
     }
+
 
     /**
      * ViewDragHelper callback
@@ -51,7 +60,7 @@ public class SwipeLayout extends FrameLayout{
             super.onViewPositionChanged(changedView, left, top, dx, dy);
             //Log.v("zxs","view changed "+left+"   "+top+"   "+dx+"   "+dy);
             xOffset=Math.abs((float)left)/mBottomView.getWidth();
-           // Log.v("zxs","view changed "+xOffset);
+            Log.v("zxs","view changed "+xOffset);
         }
 
         @Override
@@ -63,7 +72,8 @@ public class SwipeLayout extends FrameLayout{
         @Override
         public int clampViewPositionHorizontal(View child, int left, int dx) {
 
-            final int newLeft =Math.min(Math.max(-mBottomView.getWidth(),left),0);
+            final int newLeft =Math.min(Math.max(-mBottomView.getWidth(), left), 0);
+            Log.v("zxs","clampViewPositionHorizontal"+newLeft);
             return newLeft;
         }
 
@@ -71,7 +81,7 @@ public class SwipeLayout extends FrameLayout{
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             super.onViewReleased(releasedChild, xvel, yvel);
             //slidViewTo();
-            //Log.v("zxs","xvel"+xvel);
+
             if(xOffset>=0.5){
                 mViewDragHelper.settleCapturedViewAt(-mBottomView.getWidth(), 0);
             }else{
@@ -86,7 +96,9 @@ public class SwipeLayout extends FrameLayout{
 
         @Override
         public boolean tryCaptureView(View view, int i) {
-
+            if(mFrontView==null||mBottomView==null){
+                initChildView();
+            }
             return view==mFrontView;
         }
 
@@ -122,7 +134,7 @@ public class SwipeLayout extends FrameLayout{
             mViewDragHelper.cancel();
             return false;
         }
-
+        Log.v("zxs","intercept view");
         return super.onInterceptTouchEvent(ev);
     }
 
