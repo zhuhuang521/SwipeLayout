@@ -2,6 +2,7 @@ package com.zxs.pulltorefresh;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -10,17 +11,19 @@ import android.widget.ListView;
  * Created by zxs on 14/10/26.
  */
 public class PullToRefreshListView extends ListView implements AbsListView.OnScrollListener{
-
+    private LayoutInflater inflater;
     public PullToRefreshListView(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public PullToRefreshListView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public PullToRefreshListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        initView();
     }
 
     /**
@@ -38,6 +41,18 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+        switch(ev.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+        }
+
+
         return super.onTouchEvent(ev);
     }
 
