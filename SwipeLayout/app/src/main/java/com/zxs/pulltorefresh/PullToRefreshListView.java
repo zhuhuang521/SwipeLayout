@@ -2,16 +2,23 @@ package com.zxs.pulltorefresh;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
+
+import com.zxs.swipelayout.R;
 
 /**
  * Created by zxs on 14/10/26.
  */
 public class PullToRefreshListView extends ListView implements AbsListView.OnScrollListener{
     private LayoutInflater inflater;
+
+    private View mHeadView;
+    private View mFooterView;
     public PullToRefreshListView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -30,6 +37,8 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
      * init headView and footView
      * */
     private void initView(){
+        mHeadView=inflater.inflate(R.layout.headview_layout,null);
+        this.addHeaderView(mHeadView);
 
     }
 
@@ -45,6 +54,7 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
             case MotionEvent.ACTION_DOWN:
                 break;
             case MotionEvent.ACTION_MOVE:
+                changeRefreshViewHeight(ev);
                 break;
             case MotionEvent.ACTION_CANCEL:
                 break;
@@ -56,7 +66,15 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
         return super.onTouchEvent(ev);
     }
 
-    @Override
+    /**
+     * change refresh view height
+     * @param ev 触摸动作
+     * */
+    private void changeRefreshViewHeight(MotionEvent ev){
+        int y=(int)ev.getHistoricalY(0);
+        Log.v("zxs","touch y "+y);
+    }
+     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
     }
