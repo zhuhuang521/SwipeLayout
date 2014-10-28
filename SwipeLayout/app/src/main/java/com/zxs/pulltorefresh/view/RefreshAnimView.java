@@ -1,6 +1,9 @@
 package com.zxs.pulltorefresh.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -108,12 +111,50 @@ public class RefreshAnimView extends View{
      * */
     public void resetViewForRefresh(){
         ObjectAnimator animy1=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_y",viewHeight,-100).setDuration(300);
+        ObjectAnimator animscale=ObjectAnimator.ofFloat(mRefreshArrow,"zoomScale",1,1).setDuration(300);
         ObjectAnimator animx1=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_x",viewWidth/2,(viewHeight/10)*9).setDuration(2000);
+        animx1.addUpdateListener(new MyAnimatorUpdateListener());
+        AnimatorSet animatorSet1=new AnimatorSet();
+        animatorSet1.playTogether(animy1,animx1,animscale);
+        animatorSet1.start();
+
+
         ObjectAnimator animy2=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_y",-100,0).setDuration(200);
         ObjectAnimator animy3=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_y",viewHeight,-100).setDuration(200);
         ObjectAnimator animy4=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_y",viewHeight,-100).setDuration(200);
 
         ObjectAnimator currentanimy1=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_y",viewHeight,-100).setDuration(200);
+    }
+
+    private class MyAnimatorUpdateListener implements ValueAnimator.AnimatorUpdateListener{
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            viewHeight=(int)mRefreshArrow.bottom_y;
+            RefreshAnimView.this.invalidate();
+           // RefreshAnimView.this.setMeasuredDimension(viewWidth,viewHeight);
+        }
+    }
+
+    private class MyAnimatorListener implements Animator.AnimatorListener{
+        @Override
+        public void onAnimationEnd(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationStart(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+
+        }
     }
 
     /**
@@ -165,8 +206,42 @@ public class RefreshAnimView extends View{
         /**
          * 松手是更新view的状态
          * */
-        public void setBottom_y(float y){
 
+         public void setZoomScale(float scale){
+             this.zoomScale=scale;
+         }
+         public float getZoomScale(){
+             return zoomScale;
+         }
+         public void setBottom_y(float y){
+            viewHeight=(int)y;
+            second_line_begin_x=zoomScale*bottom_x;
+            second_line_begin_y=(bottom_y-radio-lenght/2)*zoomScale;
+            second_line_end_x=(bottom_x-(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
+            second_line_end_y=(bottom_y-radio-lenght/2+(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
+
+            third_line_begin_x=bottom_x*zoomScale;
+            third_line_begin_y=(bottom_y-radio-lenght/2)*zoomScale;
+            third_line_end_x=(bottom_x+(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
+            third_line_end_y=(bottom_y-radio-lenght/2+(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
+        }
+        public void setBottom_x(float x){
+            bottom_x=x;
+            second_line_begin_x=zoomScale*bottom_x;
+            second_line_begin_y=(bottom_y-radio-lenght/2)*zoomScale;
+            second_line_end_x=(bottom_x-(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
+            second_line_end_y=(bottom_y-radio-lenght/2+(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
+
+            third_line_begin_x=bottom_x*zoomScale;
+            third_line_begin_y=(bottom_y-radio-lenght/2)*zoomScale;
+            third_line_end_x=(bottom_x+(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
+            third_line_end_y=(bottom_y-radio-lenght/2+(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
+        }
+        public float getBottom_y(){
+            return bottom_y;
+        }
+        public float getBottom_x(){
+            return bottom_x;
         }
          /**
          * 下拉刷新时更新view的状态
