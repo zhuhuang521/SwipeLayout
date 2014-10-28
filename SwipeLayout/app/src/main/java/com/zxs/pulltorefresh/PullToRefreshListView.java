@@ -80,7 +80,8 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
 
                 break;
             default:
-                mScroller.startScroll(0,mHeadLayout.getHeight(),0,-mHeadLayout.getHeight(),300);
+                //mScroller.startScroll(0,mHeadLayout.getHeight(),0,-mHeadLayout.getHeight(),300);
+                resetHeadView();
                 this.invalidate();
                 break;
         }
@@ -89,6 +90,14 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
         return super.onTouchEvent(ev);
     }
 
+    /**
+     * 重置headView
+     * */
+    private void resetHeadView(){
+        if(animView!=null){
+            animView.resetViewForRefresh();
+        }
+    }
     /**
      * change refresh view height
      * @param y 触摸动作
@@ -111,7 +120,7 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
     public void computeScroll() {
         if(mScroller.computeScrollOffset()){
            // Log.v("zxs","computeScroll dexy"+mScroller.getCurrY()+"   "+mScroller.getStartY());
-            mHeadLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,mScroller.getCurrY()>1?mScroller.getCurrY():1));
+            //mHeadLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,mScroller.getCurrY()>1?mScroller.getCurrY():1));
         }
         super.computeScroll();
     }
