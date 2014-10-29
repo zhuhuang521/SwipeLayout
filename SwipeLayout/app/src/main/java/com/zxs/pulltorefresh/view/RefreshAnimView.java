@@ -12,6 +12,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 /**
  * 下拉刷新或者上拉加载更多的过度动画
@@ -21,12 +22,16 @@ public class RefreshAnimView extends View{
 
     private Paint paint;
 
+    private Paint textPaint;
+
     private int viewHeight = -1;
     private int viewWidth = -1;
 
     private RefreshCurrent mRefreshCurrent;
     private RefreshArrow mRefreshArrow;
     private float mTitleHeight;
+
+    private int AnimStatus=0;
     public RefreshAnimView(Context context) {
         this(context,null);
     }
@@ -44,11 +49,18 @@ public class RefreshAnimView extends View{
      * 初始化数据
      * */
     private void initData(Context context){
+        textPaint=new Paint();
+        textPaint.setAntiAlias(true);
+        textPaint.setTextAlign(Paint.Align.CENTER);
+        textPaint.setTextSize(25);
+        textPaint.setColor(Color.GRAY);
         paint =  new Paint();
         paint.setColor(Color.GRAY);
         mRefreshArrow=new RefreshArrow(context);
         mRefreshArrow.radio=context.getResources().getDisplayMetrics().density*20;
         mRefreshArrow.lenght=context.getResources().getDisplayMetrics().density*20;
+        mRefreshArrow.radiodefault=mRefreshArrow.radio;
+        mRefreshArrow.lenghtdefault=mRefreshArrow.lenght;
         mRefreshCurrent = new RefreshCurrent();
         mTitleHeight=context.getResources().getDisplayMetrics().density*48;
 
@@ -63,9 +75,18 @@ public class RefreshAnimView extends View{
         drawCurrent(canvas);
          //绘制箭头
         drawArrow(canvas);
+         if(AnimStatus==1){
+             drawRefreshText(canvas);
+         }
     }
 
     /**
+     * 绘制提示文字
+     * */
+    private void drawRefreshText(Canvas canvas){
+        canvas.drawText("正在刷新数据……",viewWidth/2,mTitleHeight/2,textPaint);
+    }
+     /**
      * 绘制带有箭头的指示
      * **/
     private void drawArrow(Canvas canvas){
@@ -107,38 +128,53 @@ public class RefreshAnimView extends View{
     }
 
     /**
-     * 松手放开
+
      * */
     public void resetViewForRefresh(){
+        ValueAnimator heightanim=ValueAnimator.ofInt(viewHeight,(int)mTitleHeight).setDuration(300);
+        heightanim.addUpdateListener(new MyViewHeightUpdateListener());
+        heightanim.addListener(new MyAnimatorListener(1));
+        heightanim.start();
         ObjectAnimator animy1=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_y",viewHeight,-100).setDuration(300);
-        ObjectAnimator animscale=ObjectAnimator.ofFloat(mRefreshArrow,"zoomScale",1,1).setDuration(300);
-        ObjectAnimator animx1=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_x",viewWidth/2,(viewHeight/10)*9).setDuration(2000);
+        ObjectAnimator animscale=ObjectAnimator.ofFloat(mRefreshArrow,"zoomScale",1,0.5f).setDuration(300);
+        ObjectAnimator animx1=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_x",viewWidth/2,viewWidth/10*9).setDuration(2400);
         animx1.addUpdateListener(new MyAnimatorUpdateListener());
         AnimatorSet animatorSet1=new AnimatorSet();
         animatorSet1.playTogether(animy1,animx1,animscale);
         animatorSet1.start();
 
-
-        ObjectAnimator animy2=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_y",-100,0).setDuration(200);
-        ObjectAnimator animy3=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_y",viewHeight,-100).setDuration(200);
-        ObjectAnimator animy4=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_y",viewHeight,-100).setDuration(200);
-
-        ObjectAnimator currentanimy1=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_y",viewHeight,-100).setDuration(200);
+        ObjectAnimator animy2=ObjectAnimator.ofFloat(mRefreshArrow,"bottom_y",-100,mTitleHeight,5,mTitleHeight,20,mTitleHeight,30,mTitleHeight).setDuration(1700);
+        animy2.addUpdateListener(new MyAnimatorUpdateListener());
+        animy2.setStartDelay(300);
+        animy2.start();
+    }
+    private class MyViewHeightUpdateListener implements  ValueAnimator.AnimatorUpdateListener{
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            RefreshAnimView.this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (Integer) animation.getAnimatedValue()));
+        }
     }
 
     private class MyAnimatorUpdateListener implements ValueAnimator.AnimatorUpdateListener{
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
-            viewHeight=(int)mRefreshArrow.bottom_y;
+            //viewHeight=(int)mRefreshArrow.bottom_y;
             RefreshAnimView.this.invalidate();
            // RefreshAnimView.this.setMeasuredDimension(viewWidth,viewHeight);
         }
     }
 
     private class MyAnimatorListener implements Animator.AnimatorListener{
+        private int flag;
+        public MyAnimatorListener(int flag){
+            this.flag=flag;
+        }
+
         @Override
         public void onAnimationEnd(Animator animation) {
-
+            if(flag==1){
+                AnimStatus=1;
+            }
         }
 
         @Override
@@ -171,7 +207,16 @@ public class RefreshAnimView extends View{
      * 下拉刷新的大小
      *@param size 下拉刷新的距离
      * */
-    public void setPullSize(float size){
+    public void setPullSize(int size){
+        Log.v("zxs","setPullSize"+size);
+        this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size));
+        //this.measure(viewWidth,size);
+        viewHeight = size;
+        mRefreshCurrent.setCurrentRectf(viewHeight);
+        mRefreshCurrent.setTitleRectf(viewHeight);
+        mRefreshArrow.bottom_x=viewWidth/2;
+        mRefreshArrow.setPullY(viewHeight);
+        this.invalidate();
 
     }
 
@@ -186,6 +231,8 @@ public class RefreshAnimView extends View{
         float radio;
         float lenght;
 
+        float radiodefault;
+        float lenghtdefault;
         //剪头方向 1 向下 0 向上
         float direction=1;
 
@@ -209,33 +256,48 @@ public class RefreshAnimView extends View{
 
          public void setZoomScale(float scale){
              this.zoomScale=scale;
+             radio=radiodefault*zoomScale;
+             lenght=lenghtdefault*zoomScale;
+
          }
          public float getZoomScale(){
              return zoomScale;
          }
          public void setBottom_y(float y){
             viewHeight=(int)y;
-            second_line_begin_x=zoomScale*bottom_x;
-            second_line_begin_y=(bottom_y-radio-lenght/2)*zoomScale;
-            second_line_end_x=(bottom_x-(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
-            second_line_end_y=(bottom_y-radio-lenght/2+(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
+            bottom_y=y;
 
-            third_line_begin_x=bottom_x*zoomScale;
-            third_line_begin_y=(bottom_y-radio-lenght/2)*zoomScale;
-            third_line_end_x=(bottom_x+(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
-            third_line_end_y=(bottom_y-radio-lenght/2+(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
+             first_line_begin_x=bottom_x;
+             first_line_begin_y=bottom_y-radio-lenght/2;
+             first_line_end_x=bottom_x;
+             first_line_end_y=bottom_y-radio+lenght/2;
+
+            second_line_begin_x=bottom_x;
+            second_line_begin_y=(bottom_y-radio-lenght/2);
+            second_line_end_x=(bottom_x-(float)Math.sin(Math.toRadians((double)45))*lenght/2);
+            second_line_end_y=(bottom_y-radio-lenght/2+(float)Math.sin(Math.toRadians((double)45))*lenght/2);
+
+            third_line_begin_x=bottom_x;
+            third_line_begin_y=(bottom_y-radio-lenght/2);
+            third_line_end_x=(bottom_x+(float)Math.sin(Math.toRadians((double)45))*lenght/2);
+            third_line_end_y=(bottom_y-radio-lenght/2+(float)Math.sin(Math.toRadians((double)45))*lenght/2);
         }
         public void setBottom_x(float x){
             bottom_x=x;
-            second_line_begin_x=zoomScale*bottom_x;
-            second_line_begin_y=(bottom_y-radio-lenght/2)*zoomScale;
-            second_line_end_x=(bottom_x-(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
-            second_line_end_y=(bottom_y-radio-lenght/2+(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
+            first_line_begin_x=bottom_x;
+            first_line_begin_y=bottom_y-radio-lenght/2;
+            first_line_end_x=bottom_x;
+            first_line_end_y=bottom_y-radio+lenght/2;
 
-            third_line_begin_x=bottom_x*zoomScale;
-            third_line_begin_y=(bottom_y-radio-lenght/2)*zoomScale;
-            third_line_end_x=(bottom_x+(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
-            third_line_end_y=(bottom_y-radio-lenght/2+(float)Math.sin(Math.toRadians((double)45))*lenght/2)*zoomScale;
+            second_line_begin_x=bottom_x;
+            second_line_begin_y=(bottom_y-radio-lenght/2);
+            second_line_end_x=(bottom_x-(float)Math.sin(Math.toRadians((double)45))*lenght/2);
+            second_line_end_y=(bottom_y-radio-lenght/2+(float)Math.sin(Math.toRadians((double)45))*lenght/2);
+
+            third_line_begin_x=bottom_x;
+            third_line_begin_y=(bottom_y-radio-lenght/2);
+            third_line_end_x=(bottom_x+(float)Math.sin(Math.toRadians((double)45))*lenght/2);
+            third_line_end_y=(bottom_y-radio-lenght/2+(float)Math.sin(Math.toRadians((double)45))*lenght/2);
         }
         public float getBottom_y(){
             return bottom_y;
@@ -248,7 +310,10 @@ public class RefreshAnimView extends View{
          * */
         public void setPullY(float y){
             this.bottom_y=y;
-
+            if(zoomScale<1){
+                setZoomScale(1f);
+            }
+            AnimStatus=0;
             first_line_begin_x=bottom_x;
             first_line_begin_y=bottom_y-radio-lenght/2;
             first_line_end_x=bottom_x;

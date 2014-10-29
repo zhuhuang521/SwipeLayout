@@ -50,10 +50,10 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
      * */
     private void initView(){
         mHeadView=inflater.inflate(R.layout.headview_layout,null);
-        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,1);
+        //LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
         this.addHeaderView(mHeadView);
-        mHeadLayout=(LinearLayout)mHeadView.findViewById(R.id.headText);
-        mHeadLayout.setLayoutParams(params);
+       // mHeadLayout=(LinearLayout)mHeadView.findViewById(R.id.headText);
+        //mHeadLayout.setLayoutParams(params);
         animView=(RefreshAnimView)mHeadView.findViewById(R.id.animView);
 
     }
@@ -75,6 +75,7 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
                     float lastY = mDownY-ev.getY();
                     if(lastY<0){
                         changeRefreshViewHeight(-lastY);
+                        return true;
                     }
                 }
 
@@ -104,7 +105,8 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
      * */
     private void changeRefreshViewHeight(float y){
        // Log.v("zxs", "touch y " + y);
-        mHeadLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,(int)y));
+       //mHeadLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,(int)y));
+       animView.setPullSize((int)y);
     }
      @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
