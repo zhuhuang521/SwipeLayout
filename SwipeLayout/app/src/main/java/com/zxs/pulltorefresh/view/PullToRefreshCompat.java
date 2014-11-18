@@ -21,8 +21,8 @@ public class PullToRefreshCompat {
 
     private LayoutInflater inflater;
 
-    private RefreshAnimView mHeadAnimView;
-
+    private RefreshHeadAnimView mHeadAnimView;
+    private RefreshFooterAnimView mFooterAnimView;
     private int mViewType=0;
     private float mDownY =-1;
 
@@ -49,8 +49,10 @@ public class PullToRefreshCompat {
         View headView=inflater.inflate(R.layout.headview_layout,null);
         if(mViewType==0){
             mListView.setOnTouchListener(new ListViewOnTouchListener());
-            mHeadAnimView=(RefreshAnimView)headView.findViewById(R.id.animView);
+            mHeadAnimView=(RefreshHeadAnimView)headView.findViewById(R.id.animView);
             mListView.addHeaderView(headView);
+            mFooterAnimView = new RefreshFooterAnimView(mContext);
+            mListView.addFooterView(mFooterAnimView);
         }
         else
         if(mViewType==1){
@@ -78,14 +80,15 @@ public class PullToRefreshCompat {
     private class ListViewOnTouchListener implements View.OnTouchListener{
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            Log.v("zxs","touch action");
+            Log.v("zxs","touch action"+getFirstPosition());
             switch(event.getAction()){
 
                 case MotionEvent.ACTION_DOWN:
                     if(getFirstPosition()==0&&mDownY==-1){
                         mDownY=event.getY();
+                        return false;
                     }
-                    break;
+                    return true;
                 case MotionEvent.ACTION_MOVE:
                     if(getFirstPosition()==0&&mDownY==-1){
                         mDownY=event.getY();
@@ -136,6 +139,18 @@ public class PullToRefreshCompat {
         }
     }
 
+    /**
+     * 更改刷新状态为加载更多
+     * */
+    public void setBottomViewToLoadingMore(){
 
+    }
+
+    /**
+     * 回复刷新状态为初始状态
+     * */
+    public void setRefreshStatusToBegin(){
+
+    }
 
  }

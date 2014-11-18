@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
  * 下拉刷新或者上拉加载更多的过度动画
  * Created by xuesong.zhu on 2014/10/28.
  */
-public class RefreshAnimView extends View{
+public class RefreshHeadAnimView extends View{
 
     private Paint paint;
 
@@ -32,15 +32,15 @@ public class RefreshAnimView extends View{
     private float mTitleHeight;
 
     private int AnimStatus=0;
-    public RefreshAnimView(Context context) {
+    public RefreshHeadAnimView(Context context) {
         this(context,null);
     }
 
-    public RefreshAnimView(Context context, AttributeSet attrs) {
+    public RefreshHeadAnimView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RefreshAnimView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RefreshHeadAnimView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initData(context);
     }
@@ -151,7 +151,7 @@ public class RefreshAnimView extends View{
     private class MyViewHeightUpdateListener implements  ValueAnimator.AnimatorUpdateListener{
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
-            RefreshAnimView.this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (Integer) animation.getAnimatedValue()));
+            RefreshHeadAnimView.this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (Integer) animation.getAnimatedValue()));
         }
     }
 
@@ -159,7 +159,7 @@ public class RefreshAnimView extends View{
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             //viewHeight=(int)mRefreshArrow.bottom_y;
-            RefreshAnimView.this.invalidate();
+            RefreshHeadAnimView.this.invalidate();
            // RefreshAnimView.this.setMeasuredDimension(viewWidth,viewHeight);
         }
     }

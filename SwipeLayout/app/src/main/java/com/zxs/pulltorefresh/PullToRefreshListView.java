@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Scroller;
 
-import com.zxs.pulltorefresh.view.RefreshAnimView;
+import com.zxs.pulltorefresh.view.RefreshHeadAnimView;
 import com.zxs.swipelayout.R;
 
 /**
@@ -23,7 +23,7 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
     private View mHeadView;
 
     private LinearLayout mHeadLayout;
-    private RefreshAnimView animView;
+    private RefreshHeadAnimView animView;
     private View mFooterView;
 
     private float mDownY;
@@ -54,7 +54,7 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
         this.addHeaderView(mHeadView);
        // mHeadLayout=(LinearLayout)mHeadView.findViewById(R.id.headText);
         //mHeadLayout.setLayoutParams(params);
-        animView=(RefreshAnimView)mHeadView.findViewById(R.id.animView);
+        animView=(RefreshHeadAnimView)mHeadView.findViewById(R.id.animView);
 
     }
 
