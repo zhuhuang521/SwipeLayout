@@ -12,11 +12,22 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
+=======
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
+=======
+
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshAnimView.java
+>>>>>>> FETCH_HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
 /**
  * 下拉刷新或者上拉加载更多的过度动画
  * Created by xuesong.zhu on 2014/10/28.
  */
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
 public class RefreshHeadAnimView extends BaseHeadView{
+=======
+public class RefreshHeadAnimView extends View{
+>>>>>>> FETCH_HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
 
     private Paint paint;
 
@@ -27,9 +38,23 @@ public class RefreshHeadAnimView extends BaseHeadView{
 
     private RefreshCurrent mRefreshCurrent;
     private RefreshArrow mRefreshArrow;
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
 
     private int AnimStatus=0;
     public RefreshHeadAnimView(Context context) {
+=======
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
+    public float mTitleHeight;
+
+    private int AnimStatus=0;
+    public RefreshHeadAnimView(Context context) {
+=======
+    private float mTitleHeight;
+
+    private int AnimStatus=0;
+    public RefreshAnimView(Context context) {
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshAnimView.java
+>>>>>>> FETCH_HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
         this(context,null);
     }
 
@@ -49,8 +74,18 @@ public class RefreshHeadAnimView extends BaseHeadView{
         textPaint=new Paint();
         textPaint.setAntiAlias(true);
         textPaint.setTextAlign(Paint.Align.CENTER);
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
         textPaint.setTextSize(context.getResources().getDisplayMetrics().density*16);
         textPaint.setColor(0xff33b5e5);
+=======
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
+        textPaint.setTextSize(context.getResources().getDisplayMetrics().density*16);
+        textPaint.setColor(0xff33b5e5);
+=======
+        textPaint.setTextSize(25);
+        textPaint.setColor(Color.GRAY);
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshAnimView.java
+>>>>>>> FETCH_HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
         paint =  new Paint();
         paint.setColor(Color.GRAY);
         mRefreshArrow=new RefreshArrow(context);
@@ -143,7 +178,15 @@ public class RefreshHeadAnimView extends BaseHeadView{
     private class MyViewHeightUpdateListener implements  ValueAnimator.AnimatorUpdateListener{
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
             RefreshHeadAnimView.this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (Integer) animation.getAnimatedValue()));
+=======
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
+            RefreshHeadAnimView.this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (Integer) animation.getAnimatedValue()));
+=======
+            RefreshAnimView.this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (Integer) animation.getAnimatedValue()));
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshAnimView.java
+>>>>>>> FETCH_HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
         }
     }
 
@@ -151,7 +194,15 @@ public class RefreshHeadAnimView extends BaseHeadView{
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             //viewHeight=(int)mRefreshArrow.bottom_y;
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
             RefreshHeadAnimView.this.invalidate();
+=======
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
+            RefreshHeadAnimView.this.invalidate();
+=======
+            RefreshAnimView.this.invalidate();
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshAnimView.java
+>>>>>>> FETCH_HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
            // RefreshAnimView.this.setMeasuredDimension(viewWidth,viewHeight);
         }
     }
@@ -201,6 +252,13 @@ public class RefreshHeadAnimView extends BaseHeadView{
      *@param size 下拉刷新的距离
      * */
     public void setPullSize(int size){
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
+=======
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
+=======
+        Log.v("zxs","setPullSize"+size);
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshAnimView.java
+>>>>>>> FETCH_HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
         this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size));
         //this.measure(viewWidth,size);
         viewHeight = size;
@@ -394,6 +452,9 @@ public class RefreshHeadAnimView extends BaseHeadView{
         heightanim.addListener(new MyAnimatorListener(1));
         heightanim.start();
     }
+<<<<<<< HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
 
 
+=======
+>>>>>>> FETCH_HEAD:SwipeLayout/app/src/main/java/com/zxs/pulltorefresh/view/RefreshHeadAnimView.java
    }
