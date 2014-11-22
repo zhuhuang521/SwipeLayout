@@ -10,11 +10,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-<<<<<<< HEAD:SwipeLayout/app/src/main/res/layout/list_headview_layout.xml
     <com.zxs.pulltorefresh.view.RefreshWeixiAnimView
-=======
-    <com.zxs.pulltorefresh.view.RefreshHeadAnimView
->>>>>>> FETCH_HEAD:SwipeLayout/app/src/main/res/layout/list_headview_layout.xml
         android:id="@+id/HeadAnimView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

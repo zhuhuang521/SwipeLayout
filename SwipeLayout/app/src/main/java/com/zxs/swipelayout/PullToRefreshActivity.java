@@ -25,30 +25,7 @@ public class PullToRefreshActivity extends Activity {
     private LayoutInflater inflater;
     PullToRefreshCompat Compat;
     boolean done=true;
-    public Handler handler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case 1:
-                    //if(!done)
-                      //  return;
-                    Compat.setRefreshStatusToBegin();
-                    Message message=new Message();
-                    message.what=2;
-                   // handler.sendMessageDelayed(message,2000);
-                    break;
-                case 2:
 
-                    Compat.setHeadViewToLoading();
-                    done=false;
-                    break;
-                case 3:
-                    Compat.setRefreshStatusToBegin();
-                    break;
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
