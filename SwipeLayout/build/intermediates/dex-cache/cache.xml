@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/zxs/Android/SDK/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e">
+        <dex dex="/Users/zxs/Android/GitHub/SwipeLayout/SwipeLayout/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-9bb2a1ff9e40a5e38f4ae39fd6f8d9df0e0206e9.jar" />
+    </item>
+    <item
+        jar="/Users/zxs/Android/GitHub/SwipeLayout/SwipeLayout/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0">
+        <dex dex="/Users/zxs/Android/GitHub/SwipeLayout/SwipeLayout/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-7030fa5f07037278f35c3d209c3928abd91f459c.jar" />
+    </item>
+    <item
+        jar="/Users/zxs/Android/GitHub/SwipeLayout/SwipeLayout/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6">
+        <dex dex="/Users/zxs/Android/GitHub/SwipeLayout/SwipeLayout/app/build/intermediates/pre-dexed/debug/classes-916869e45ef860efac0b3edd6d384dd3e96127c2.jar" />
+    </item>
+
+</items>

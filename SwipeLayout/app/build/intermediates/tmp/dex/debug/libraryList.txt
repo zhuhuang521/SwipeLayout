@@ -1,0 +1,4 @@
+/Users/zxs/Android/GitHub/SwipeLayout/SwipeLayout/app/build/intermediates/pre-dexed/debug/classes-916869e45ef860efac0b3edd6d384dd3e96127c2.jar
+/Users/zxs/Android/GitHub/SwipeLayout/SwipeLayout/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-7030fa5f07037278f35c3d209c3928abd91f459c.jar
+/Users/zxs/Android/GitHub/SwipeLayout/SwipeLayout/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-9bb2a1ff9e40a5e38f4ae39fd6f8d9df0e0206e9.jar
+/Users/zxs/Android/GitHub/SwipeLayout/SwipeLayout/app/build/intermediates/classes/debug

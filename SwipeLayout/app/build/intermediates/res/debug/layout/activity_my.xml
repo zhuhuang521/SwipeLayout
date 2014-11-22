@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MyActivity">
+    <Button
+        android:id="@+id/btn_swipe"
+        android:text="@string/swipelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_pulltorefresh"
+        android:text="@string/pulltorefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_swipelist"
+        android:text="@string/swipelist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+<!-- From: file:/Users/zxs/Android/GitHub/SwipeLayout/SwipeLayout/app/src/main/res/layout/activity_my.xml -->
