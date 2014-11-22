@@ -10,8 +10,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <com.zxs.pulltorefresh.view.RefreshAnimView
-        android:id="@+id/animView"
+    <com.zxs.pulltorefresh.view.RefreshHeadAnimView
+        android:id="@+id/HeadAnimView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     </LinearLayout>
