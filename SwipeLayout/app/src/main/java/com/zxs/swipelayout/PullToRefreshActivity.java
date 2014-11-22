@@ -7,9 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.zxs.pulltorefresh.PullToRefreshListView;
+import com.zxs.pulltorefresh.view.PullToRefreshCompat;
 
 /**
  * Created by zxs on 14/10/26.
@@ -21,7 +22,8 @@ public class PullToRefreshActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pulltorefreshlayout);
         inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        PullToRefreshListView listView=(PullToRefreshListView)findViewById(R.id.pullListView);
+        ListView listView=(ListView)findViewById(R.id.pullListView);
+        PullToRefreshCompat Compat = new PullToRefreshCompat(this,listView);
         listView.setAdapter(new MyAdapter());
     }
 

@@ -1,10 +1,17 @@
 package com.zxs.pulltorefresh.view;
 
 import android.content.Context;
+<<<<<<< HEAD
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
+=======
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5
 import android.widget.GridView;
 import android.widget.ListView;
 
@@ -21,6 +28,7 @@ public class PullToRefreshCompat {
 
     private LayoutInflater inflater;
 
+<<<<<<< HEAD
     private RefreshHeadAnimView mHeadAnimView;
     private RefreshFooterAnimView mFooterAnimView;
     private int mViewType=0;
@@ -28,6 +36,14 @@ public class PullToRefreshCompat {
     private boolean mCouldLoadMore=true;
     private PullToRefreshInterface pullToRefreshInterface;
     //刷新的状态 0 默认状态 1 下拉刷新中 2 下拉请求数据中 3加载更多
+=======
+    private RefreshAnimView mHeadAnimView;
+
+    private int mViewType=0;
+    private float mDownY =-1;
+
+    //刷新的状态 0 默认状态 1 正在下拉 2 请求数据中
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5
     private int mRefreshStatus=0;
     public PullToRefreshCompat(Context context , ListView view){
         this.mContext = context;
@@ -47,6 +63,7 @@ public class PullToRefreshCompat {
      * */
     private void initCompat(){
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+<<<<<<< HEAD
         View headView=inflater.inflate(R.layout.list_headview_layout,null);
         View footerView=inflater.inflate(R.layout.list_footerview_layout,null);
         if(mViewType==0){
@@ -57,6 +74,13 @@ public class PullToRefreshCompat {
             mFooterAnimView = (RefreshFooterAnimView)footerView.findViewById(R.id.footerAnimView);
             mFooterAnimView.setCompat(this);
             mListView.addFooterView(footerView);
+=======
+        View headView=inflater.inflate(R.layout.headview_layout,null);
+        if(mViewType==0){
+            mListView.setOnTouchListener(new ListViewOnTouchListener());
+            mHeadAnimView=(RefreshAnimView)headView.findViewById(R.id.animView);
+            mListView.addHeaderView(headView);
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5
         }
         else
         if(mViewType==1){
@@ -84,6 +108,7 @@ public class PullToRefreshCompat {
     private class ListViewOnTouchListener implements View.OnTouchListener{
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+<<<<<<< HEAD
 
             switch(event.getAction()){
 
@@ -91,6 +116,12 @@ public class PullToRefreshCompat {
                     if(mRefreshStatus!=0){
                         return true;
                     }
+=======
+            Log.v("zxs","touch action");
+            switch(event.getAction()){
+
+                case MotionEvent.ACTION_DOWN:
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5
                     if(getFirstPosition()==0&&mDownY==-1){
                         mDownY=event.getY();
                     }
@@ -105,7 +136,10 @@ public class PullToRefreshCompat {
                         if(rangeY<=0){
                             mRefreshStatus=1;
                             changeHeadViewHeight(-rangeY);
+<<<<<<< HEAD
                             mRefreshStatus=1;
+=======
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5
                             return true;
                         }
 
@@ -113,6 +147,7 @@ public class PullToRefreshCompat {
                     break;
                 default:
                     if(mRefreshStatus==1) {
+<<<<<<< HEAD
 						mRefreshStatus=2;
 						int rangeY=-(int)(mDownY-event.getY());
 						if(rangeY>=2*mHeadAnimView.mTitleHeight){
@@ -126,6 +161,10 @@ public class PullToRefreshCompat {
 						return  true;
                     }
 					mDownY=-1;
+=======
+                        setHeadViewToLoading();
+                    }
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5
                     break;
             }
             return false;
@@ -133,6 +172,7 @@ public class PullToRefreshCompat {
     }
 
     /**
+<<<<<<< HEAD
      * 回调滑动距离接口
      * */
     private void callbackScrollY(){
@@ -188,6 +228,12 @@ public class PullToRefreshCompat {
      * 改变headRefreshView height
      * **/
     private void changeHeadViewHeight(int height){
+=======
+     * 改变headRefreshView height
+     * **/
+    private void changeHeadViewHeight(int height){
+        Log.v("zxs","range Y "+height);
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5
         mHeadAnimView.setPullSize(height);
     }
 
@@ -201,6 +247,7 @@ public class PullToRefreshCompat {
     /**
      * 更改headView为刷新loading状态
      * */
+<<<<<<< HEAD
     public void setHeadViewToLoading(){
         if(mHeadAnimView!=null){
             mHeadAnimView.resetViewForRefresh();
@@ -261,3 +308,15 @@ public class PullToRefreshCompat {
 		mFooterAnimView.setLoadError("加载错误,点击重新加载");
 	}
    }
+=======
+    private void setHeadViewToLoading(){
+        if(mHeadAnimView!=null){
+            mHeadAnimView.resetViewForRefresh();
+            mHeadAnimView.invalidate();
+        }
+    }
+
+
+
+ }
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5

@@ -49,12 +49,20 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
      * init headView and footView
      * */
     private void initView(){
+<<<<<<< HEAD
         mHeadView=inflater.inflate(R.layout.list_headview_layout,null);
+=======
+        mHeadView=inflater.inflate(R.layout.headview_layout,null);
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5
         //LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
         this.addHeaderView(mHeadView);
        // mHeadLayout=(LinearLayout)mHeadView.findViewById(R.id.headText);
         //mHeadLayout.setLayoutParams(params);
+<<<<<<< HEAD
        // animView=(RefreshHeadAnimView)mHeadView.findViewById(R.id.animView);
+=======
+        animView=(RefreshAnimView)mHeadView.findViewById(R.id.animView);
+>>>>>>> 6ac5c55ba351bde0e7c86aeb0d6f56f29def8fa5
 
     }
 
