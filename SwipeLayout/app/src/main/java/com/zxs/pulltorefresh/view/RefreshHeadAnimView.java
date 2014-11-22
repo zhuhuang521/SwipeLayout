@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
  * 下拉刷新或者上拉加载更多的过度动画
  * Created by xuesong.zhu on 2014/10/28.
  */
-public class RefreshHeadAnimView extends View{
+public class RefreshHeadAnimView extends BaseHeadView{
 
     private Paint paint;
 
@@ -27,7 +27,6 @@ public class RefreshHeadAnimView extends View{
 
     private RefreshCurrent mRefreshCurrent;
     private RefreshArrow mRefreshArrow;
-    public float mTitleHeight;
 
     private int AnimStatus=0;
     public RefreshHeadAnimView(Context context) {
@@ -189,7 +188,8 @@ public class RefreshHeadAnimView extends View{
     /**
      * 设置顶部view的高度
      * */
-    private void setAnimViewHeight(int height){
+
+     private void setAnimViewHeight(int height){
         viewHeight = height;
         mRefreshCurrent.setCurrentRectf(viewHeight);
         mRefreshCurrent.setTitleRectf(viewHeight);
@@ -394,4 +394,6 @@ public class RefreshHeadAnimView extends View{
         heightanim.addListener(new MyAnimatorListener(1));
         heightanim.start();
     }
+
+
    }

@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zxs.pulltorefresh.PullToRefreshInterface;
 import com.zxs.pulltorefresh.view.PullToRefreshCompat;
 
 
@@ -55,13 +54,13 @@ public class PullToRefreshActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-        getActionBar().setBackgroundDrawable(getResources().getDrawable(android.R.drawable.screen_background_light_transparent));
+       // getActionBar().setBackgroundDrawable(getResources().getDrawable(android.R.drawable.screen_background_light_transparent));
         setContentView(R.layout.pulltorefreshlayout);
         inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ListView listView=(ListView)findViewById(R.id.pullListView);
         Compat = new PullToRefreshCompat(this,listView);
         listView.setAdapter(new MyAdapter());
-        Compat.setRefreshListener(new MyPullToRefreshListener());
+        //Compat.setRefreshListener(new MyPullToRefreshListener());
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -70,26 +69,7 @@ public class PullToRefreshActivity extends Activity {
         });
     }
 
-    public class MyPullToRefreshListener implements PullToRefreshInterface{
-        @Override
-        public void beginRefresh() {
-            Message message=new Message();
-            message.what=1;
-            handler.sendMessageDelayed(message,4000);
-        }
 
-        @Override
-        public void loadMore() {
-            Message message=new Message();
-            message.what=3;
-            handler.sendMessageDelayed(message,4000);
-        }
-
-        @Override
-        public void titlePosition(int y) {
-
-        }
-    }
     /**
      * pullToRefresh Adapter
      * */

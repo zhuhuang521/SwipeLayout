@@ -1,6 +1,7 @@
 package com.zxs.pulltorefresh.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,7 +22,7 @@ public class PullToRefreshCompat {
 
     private LayoutInflater inflater;
 
-    private RefreshHeadAnimView mHeadAnimView;
+    private RefreshWeixiAnimView mHeadAnimView;
     private RefreshFooterAnimView mFooterAnimView;
     private int mViewType=0;
     private float mDownY =-1;
@@ -52,7 +53,7 @@ public class PullToRefreshCompat {
         if(mViewType==0){
             mListView.setOnTouchListener(new ListViewOnTouchListener());
             mListView.setOnScrollListener(new MyScrollListener());
-            mHeadAnimView=(RefreshHeadAnimView)headView.findViewById(R.id.HeadAnimView);
+            mHeadAnimView=(RefreshWeixiAnimView)headView.findViewById(R.id.HeadAnimView);
             mListView.addHeaderView(headView);
             mFooterAnimView = (RefreshFooterAnimView)footerView.findViewById(R.id.footerAnimView);
             mFooterAnimView.setCompat(this);
@@ -114,7 +115,9 @@ public class PullToRefreshCompat {
                 default:
                     if(mRefreshStatus==1) {
 						mRefreshStatus=2;
-						int rangeY=-(int)(mDownY-event.getY());
+
+                        int rangeY=-(int)(mDownY-event.getY());
+                        Log.v("zxs","headview"+rangeY+"  "+2*mHeadAnimView.mTitleHeight);
 						if(rangeY>=2*mHeadAnimView.mTitleHeight){
 
                         	setHeadViewToLoading();
@@ -232,8 +235,7 @@ public class PullToRefreshCompat {
             mHeadAnimView.resetHeadView();
             mRefreshStatus = 0;
         }
-		mListView.setPadding(mListView.getPaddingLeft(),(int)(mContext.getResources().getDisplayMetrics().density*48)
-				,mListView.getPaddingRight(),mListView.getPaddingBottom());
+
     }
 
     public void setRefreshListener(PullToRefreshInterface listener){

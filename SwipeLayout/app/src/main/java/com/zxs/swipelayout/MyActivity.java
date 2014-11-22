@@ -24,9 +24,7 @@ public class MyActivity extends Activity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.btn_swipe:
-                    Intent gotoSwipe=new Intent();
-                    gotoSwipe.setClass(MyActivity.this,SwipeActivity.class);
-                    startActivity(gotoSwipe);
+
                     break;
                 case R.id.btn_pulltorefresh:
                     Intent putorefresh=new Intent();
@@ -34,9 +32,7 @@ public class MyActivity extends Activity {
                     startActivity(putorefresh);
                     break;
                 case R.id.btn_swipelist:
-                    Intent swipelist=new Intent();
-                    swipelist.setClass(MyActivity.this,SwipeListActivity.class);
-                    startActivity(swipelist);
+
                     break;
             }
         }
