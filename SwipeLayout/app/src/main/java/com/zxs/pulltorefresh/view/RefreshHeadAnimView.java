@@ -10,10 +10,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-
 /**
  * 下拉刷新或者上拉加载更多的过度动画
  * Created by xuesong.zhu on 2014/10/28.
@@ -29,7 +27,7 @@ public class RefreshHeadAnimView extends View{
 
     private RefreshCurrent mRefreshCurrent;
     private RefreshArrow mRefreshArrow;
-    private float mTitleHeight;
+    public float mTitleHeight;
 
     private int AnimStatus=0;
     public RefreshHeadAnimView(Context context) {
@@ -52,8 +50,8 @@ public class RefreshHeadAnimView extends View{
         textPaint=new Paint();
         textPaint.setAntiAlias(true);
         textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setTextSize(25);
-        textPaint.setColor(Color.GRAY);
+        textPaint.setTextSize(context.getResources().getDisplayMetrics().density*16);
+        textPaint.setColor(0xff33b5e5);
         paint =  new Paint();
         paint.setColor(Color.GRAY);
         mRefreshArrow=new RefreshArrow(context);
@@ -68,10 +66,6 @@ public class RefreshHeadAnimView extends View{
      @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        canvas.drawText("pull to refresh ", 30, 30, paint);
-
-
         drawCurrent(canvas);
          //绘制箭头
         drawArrow(canvas);
@@ -104,13 +98,12 @@ public class RefreshHeadAnimView extends View{
      * */
     private void drawCurrent(Canvas canvas){
 
-        paint.setColor(Color.YELLOW);
+        paint.setColor(Color.WHITE);
         if(viewHeight >= mTitleHeight){
-           // canvas.drawRect(mRefreshCurrent.currentRectf,paint);
             canvas.drawOval(mRefreshCurrent.currentRectf,paint);
         }
-       // paint.setColor(Color.RED);
         canvas.drawRect(mRefreshCurrent.titleRectf,paint);
+        canvas.drawColor(Color.WHITE);
 
     }
       @Override
@@ -208,7 +201,6 @@ public class RefreshHeadAnimView extends View{
      *@param size 下拉刷新的距离
      * */
     public void setPullSize(int size){
-        Log.v("zxs","setPullSize"+size);
         this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size));
         //this.measure(viewWidth,size);
         viewHeight = size;
@@ -242,13 +234,12 @@ public class RefreshHeadAnimView extends View{
         float third_line_begin_x,third_line_begin_y,third_line_end_x,third_line_end_y;
         public RefreshArrow(Context context){
             paint = new Paint();
-            paint.setColor(0XFFFFA500);
+            paint.setColor(0XFF1ba9ba);
             paint.setAntiAlias(true);
-
             arrowPaint = new Paint();
             arrowPaint.setColor(Color.WHITE);
             arrowPaint.setAntiAlias(true);
-            arrowPaint.setStrokeWidth(context.getResources().getDisplayMetrics().density*2);
+            arrowPaint.setStrokeWidth(context.getResources().getDisplayMetrics().density);
         }
         /**
          * 松手是更新view的状态
@@ -393,4 +384,14 @@ public class RefreshHeadAnimView extends View{
             }
         }
     }
-  }
+
+    /**
+     * 初始化到默认状态
+     * */
+    public void resetHeadView(){
+        ValueAnimator heightanim=ValueAnimator.ofInt(viewHeight,0).setDuration(300);
+        heightanim.addUpdateListener(new MyViewHeightUpdateListener());
+        heightanim.addListener(new MyAnimatorListener(1));
+        heightanim.start();
+    }
+   }

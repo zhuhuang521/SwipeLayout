@@ -3,21 +3,54 @@ package com.zxs.swipelayout;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.zxs.pulltorefresh.PullToRefreshInterface;
 import com.zxs.pulltorefresh.view.PullToRefreshCompat;
+
 
 /**
  * Created by zxs on 14/10/26.
  */
 public class PullToRefreshActivity extends Activity {
     private LayoutInflater inflater;
+    PullToRefreshCompat Compat;
+    boolean done=true;
+    public Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    //if(!done)
+                      //  return;
+                    Compat.setRefreshStatusToBegin();
+                    Message message=new Message();
+                    message.what=2;
+                   // handler.sendMessageDelayed(message,2000);
+                    break;
+                case 2:
+
+                    Compat.setHeadViewToLoading();
+                    done=false;
+                    break;
+                case 3:
+                    Compat.setRefreshStatusToBegin();
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,10 +59,37 @@ public class PullToRefreshActivity extends Activity {
         setContentView(R.layout.pulltorefreshlayout);
         inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ListView listView=(ListView)findViewById(R.id.pullListView);
-        PullToRefreshCompat Compat = new PullToRefreshCompat(this,listView);
+        Compat = new PullToRefreshCompat(this,listView);
         listView.setAdapter(new MyAdapter());
+        Compat.setRefreshListener(new MyPullToRefreshListener());
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(PullToRefreshActivity.this,"click item",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+    public class MyPullToRefreshListener implements PullToRefreshInterface{
+        @Override
+        public void beginRefresh() {
+            Message message=new Message();
+            message.what=1;
+            handler.sendMessageDelayed(message,4000);
+        }
+
+        @Override
+        public void loadMore() {
+            Message message=new Message();
+            message.what=3;
+            handler.sendMessageDelayed(message,4000);
+        }
+
+        @Override
+        public void titlePosition(int y) {
+
+        }
+    }
     /**
      * pullToRefresh Adapter
      * */
