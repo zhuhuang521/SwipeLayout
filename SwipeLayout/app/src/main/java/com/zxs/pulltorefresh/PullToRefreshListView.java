@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Scroller;
 
-import com.zxs.pulltorefresh.view.RefreshAnimView;
+import com.zxs.pulltorefresh.view.RefreshHeadAnimView;
 import com.zxs.swipelayout.R;
 
 /**
@@ -23,7 +23,7 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
     private View mHeadView;
 
     private LinearLayout mHeadLayout;
-    private RefreshAnimView animView;
+    private RefreshHeadAnimView animView;
     private View mFooterView;
 
     private float mDownY;
@@ -49,12 +49,12 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
      * init headView and footView
      * */
     private void initView(){
-        mHeadView=inflater.inflate(R.layout.headview_layout,null);
-        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,1);
+        mHeadView=inflater.inflate(R.layout.list_headview_layout,null);
+        //LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
         this.addHeaderView(mHeadView);
-        mHeadLayout=(LinearLayout)mHeadView.findViewById(R.id.headText);
-        mHeadLayout.setLayoutParams(params);
-        animView=(RefreshAnimView)mHeadView.findViewById(R.id.animView);
+       // mHeadLayout=(LinearLayout)mHeadView.findViewById(R.id.headText);
+        //mHeadLayout.setLayoutParams(params);
+       // animView=(RefreshHeadAnimView)mHeadView.findViewById(R.id.animView);
 
     }
 
@@ -75,6 +75,7 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
                     float lastY = mDownY-ev.getY();
                     if(lastY<0){
                         changeRefreshViewHeight(-lastY);
+                        return true;
                     }
                 }
 
@@ -104,7 +105,8 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
      * */
     private void changeRefreshViewHeight(float y){
        // Log.v("zxs", "touch y " + y);
-        mHeadLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,(int)y));
+       //mHeadLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,(int)y));
+       animView.setPullSize((int)y);
     }
      @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
