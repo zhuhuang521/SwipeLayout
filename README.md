@@ -19,5 +19,6 @@ SwipeLayout 主要实现了下拉刷新的封装，可以自定义下拉效果�
 
 在代码中完成：
   Compat.setRefreshListener(new PullToRefreshInterface()……);
-  实现下拉状态响应的回掉。
+  实现下拉状态相应的回掉。
+  下拉刷新
 ===========
